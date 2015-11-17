@@ -22,15 +22,22 @@ $(document).ready(function() {
         	context.drawImage(image, 0, 0, (width * ratio), (height * ratio));
 
         	//Add a filter (practice)
-        	$("button").on("click", function() {
-        		changePicture();
+        	$("#invert").on("click", function() {
+        		invertColors();
         	});
+            $("#greyscale").on("click", function() {
+                greyscale();
+            });
+            $("#negative").on("click", function() {
+                invertColors();
+                nagativeColors();
+            })
         	
         });
 
 	};
 
-	function changePicture() {
+	function invertColors() {
 		var canvas = document.getElementById("myCanvas");
         var context = canvas.getContext("2d");
         //Get the pixel array from the canvas
@@ -48,6 +55,46 @@ $(document).ready(function() {
         //Redraw the image at the same coordinates
         context.putImageData(imageData,0,0);
 	}
+
+    function greyscale() {
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
+        //Get the pixel array from the canvas
+        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        var pixels = imageData.data;
+
+        //loop through the pixels, each pixel has 4 values in the array, hence the += 4
+        //Create an inverese color effect by subtracting the current color value from 255
+        for(var i = 0; i < pixels.length; i += 4) {
+            var brightness = 0.34 * pixels[i] + 0.5 * pixels[i + 1] + 0.16 * pixels[i + 2];
+            pixels[i] = brightness; //red
+            pixels[i + 1] = brightness; //green
+            pixels[i + 2] = brightness; //blue
+        }
+
+        //Redraw the image at the same coordinates
+        context.putImageData(imageData,0,0);
+    }
+
+    function nagativeColors() {
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
+        //Get the pixel array from the canvas
+        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        var pixels = imageData.data;
+
+        //loop through the pixels, each pixel has 4 values in the array, hence the += 4
+        //Create an inverese color effect by subtracting the current color value from 255
+        for(var i = 0; i < pixels.length; i += 4) {
+            var brightness = 0.34 * pixels[i] + 0.5 * pixels[i + 1] + 0.16 * pixels[i + 2];
+            pixels[i] = brightness; //red
+            pixels[i + 1] = brightness; //green
+            pixels[i + 2] = brightness; //blue
+        }
+
+        //Redraw the image at the same coordinates
+        context.putImageData(imageData,0,0);
+    }
 	
 	createCanvas();
 
