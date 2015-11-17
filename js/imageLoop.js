@@ -22,7 +22,10 @@ $(document).ready(function() {
         	context.drawImage(image, 0, 0, (width * ratio), (height * ratio));
 
         	//Add a filter (practice)
-        	changePicture();
+        	$("button").on("click", function() {
+        		changePicture();
+        	});
+        	
         });
 
 	};
@@ -37,9 +40,9 @@ $(document).ready(function() {
     	//loop through the pixels, each pixel has 4 values in the array, hence the += 4
     	//Create an inverese color effect by subtracting the current color value from 255
 		for(var i = 0; i < pixels.length; i += 4) {
-        	pixels[i] = 255-pixels[i];
-        	pixels[i + 1] = 255-pixels[i + 1];
-        	pixels[i + 2] = 255-pixels[i + 2];
+        	pixels[i] = 255-pixels[i]; //red
+        	pixels[i + 1] = 255-pixels[i + 1]; //green
+        	pixels[i + 2] = 255-pixels[i + 2]; //blue
     	}
 
         //Redraw the image at the same coordinates
