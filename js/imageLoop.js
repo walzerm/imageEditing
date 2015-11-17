@@ -30,7 +30,7 @@ $(document).ready(function() {
             });
             $("#negative").on("click", function() {
                 invertColors();
-                nagativeColors();
+                greyscale();
             })
         	
         });
@@ -76,25 +76,7 @@ $(document).ready(function() {
         context.putImageData(imageData,0,0);
     }
 
-    function nagativeColors() {
-        var canvas = document.getElementById("myCanvas");
-        var context = canvas.getContext("2d");
-        //Get the pixel array from the canvas
-        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        var pixels = imageData.data;
-
-        //loop through the pixels, each pixel has 4 values in the array, hence the += 4
-        //Create an inverese color effect by subtracting the current color value from 255
-        for(var i = 0; i < pixels.length; i += 4) {
-            var brightness = 0.34 * pixels[i] + 0.5 * pixels[i + 1] + 0.16 * pixels[i + 2];
-            pixels[i] = brightness; //red
-            pixels[i + 1] = brightness; //green
-            pixels[i + 2] = brightness; //blue
-        }
-
-        //Redraw the image at the same coordinates
-        context.putImageData(imageData,0,0);
-    }
+    
 	
 	createCanvas();
 
