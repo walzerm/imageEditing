@@ -31,6 +31,9 @@ $(document).ready(function() {
             $("#negative").on("click", function() {
                 invertColors();
                 greyscale();
+            });
+            $("#kernel").on("click", function() {
+                kernelFilter();
             })
         	
         });
@@ -65,6 +68,7 @@ $(document).ready(function() {
 
         //loop through the pixels, each pixel has 4 values in the array, hence the += 4
         for(var i = 0; i < pixels.length; i += 4) {
+            //uses the luma equation to set each color to greyscale
             var brightness = 0.34 * pixels[i] + 0.5 * pixels[i + 1] + 0.16 * pixels[i + 2];
             pixels[i] = brightness; //red
             pixels[i + 1] = brightness; //green
@@ -80,11 +84,35 @@ $(document).ready(function() {
         //Get the pixel array from the canvas
         var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         var pixels = imageData.data;
+        console.log(pixels);
+        //describes a sorbel edge dection filter
+        var outlineKernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
+        //set a variable "row" to define the row of pixels in the canvas
         var row = canvas.width * 4;
+        //loops through the rows in the canvas
         for (var i = 0; i < pixels.length; i += row) {
-            console.log("I'm on a row bitch");
+            //parses the pixels in each row
+            for (var j = 0; j < row; j += 4) {
+                console.log("==========");
+                console.log(i);
+                console.log(j);
+                var adjustedRed = 0;
+                var adjustedGreen = 0;
+                var adjustedBlue = 0;
+                //loops through each row in the kernel matrix
+                for (var k = 0; k < outlineKernel.length; k++) {
+                    for (var l = 0; l < outlineKernel[k].length; l++) {
+                        var newI = i + (k - Math.floor(outlineKernel.length / 2));
+                        var newJ = j + (l - Math.floor(outlineKernel[k].length / 2));
+                        console.log(newI);
+                        console.log(newJ);
+
+
+                    }
+                }
+            }
         }
-    
+    }
 	
 	createCanvas();
 
