@@ -84,34 +84,58 @@ $(document).ready(function() {
         //Get the pixel array from the canvas
         var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         var pixels = imageData.data;
+
+        var newImage = context.createImageData(canvas.width, canvas.height);
+        var newPixels = newImage.data;
         console.log(pixels);
         //describes a sorbel edge dection filter
-        var outlineKernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
+        var outlineKernel = [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]];
         //set a variable "row" to define the row of pixels in the canvas
         var row = canvas.width * 4;
         //loops through the rows in the canvas
-        for (var i = 0; i < pixels.length; i += row) {
+        for (var i = 0; i < pixels.length; i += 4) {
             //parses the pixels in each row
-            for (var j = 0; j < row; j += 4) {
-                console.log("==========");
-                console.log(i);
-                console.log(j);
+            for (var j = 0; j < row; j++) {
                 var adjustedRed = 0;
+                //console.log(adjustedRed);
                 var adjustedGreen = 0;
                 var adjustedBlue = 0;
+                //console.log("The original i and j coordinates are " + i + " " + j);
                 //loops through each row in the kernel matrix
                 for (var k = 0; k < outlineKernel.length; k++) {
                     for (var l = 0; l < outlineKernel[k].length; l++) {
+                        //console.log("The k and l coordinates are " + k + " " + l);
+                        
                         var newI = i + (k - Math.floor(outlineKernel.length / 2));
-                        var newJ = j + (l - Math.floor(outlineKernel[k].length / 2));
-                        console.log(newI);
-                        console.log(newJ);
-
-
+                        var newJ = j + (l - Math.floor((outlineKernel[k].length / 2)));
+                        var flatPixelsIndex = newJ * 2000 + newI;
+                        console.log(flatPixelsIndex);
+                        var kernalValue = outlineKernel[k][l];
+                        if (pixels[flatPixelsIndex] === undefined){
+                            //adjustedRed += 0;
+                        } else {
+                            adjustedRed += pixels[flatPixelsIndex] * kernalValue;
+                            adjustedGreen += pixels[flatPixelsIndex + 1] * kernalValue;
+                            adjustedBlue += pixels[flatPixelsIndex + 2] * kernalValue;
+                        }
+                        //adjustedGreen += pixels[flatPixelsIndex + 1] * kernalValue;
+                        //adjustedBlue += pixels[flatPixelsIndex + 2] * kernalValue;
+                        //debugger;
                     }
                 }
+               // console.log("=======");
+
+                //console.log(adjustedRed);
+                var flatPixelsIndex = j * 2000 + i;
+                newPixels[flatPixelsIndex] = adjustedRed;
+                newPixels[flatPixelsIndex + 1] = adjustedGreen;
+                newPixels[flatPixelsIndex + 2] = adjustedBlue;
+                newPixels[flatPixelsIndex + 3] = 255;                
             }
         }
+        console.log(newPixels);
+        context.putImageData(newImage, 0, 0);
+
     }
 	
 	createCanvas();
