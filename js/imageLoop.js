@@ -81,20 +81,18 @@ $(document).ready(function() {
     function kernelFilter() {
         var canvas = document.getElementById("myCanvas");
         var context = canvas.getContext("2d");
-        //Get the pixel array from the canvas
+
         var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         var pixels = imageData.data;
 
         var newImage = context.createImageData(canvas.width, canvas.height);
         var newPixels = newImage.data;
-        console.log("I started");
-        //describes a sorbel edge dection filter
+
         var blurKernel = [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]];
         var edgeKernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
         var sharpenKernel = [[0, -1, 0], [-1, 5, -1], [0, -1, 0]];
-        //set a variable "row" to define the row of pixels in the canvas
+ 
         var row = canvas.width * 4;
-        //loops through the rows in the canvas
         
         for (var pix = 0; pix <= pixels.length; pix+=4) {
             var tempR = tempG = tempB = 0;
@@ -104,9 +102,9 @@ $(document).ready(function() {
                     if (pixels[tempPix] === undefined) {
                         continue;
                     }
-                   tempR += pixels[tempPix] * sharpenKernel[y + 1][x + 1];
-                   tempG += pixels[tempPix + 1] * sharpenKernel[y + 1][x + 1];
-                   tempB += pixels[tempPix + 2] * sharpenKernel[y + 1][x + 1];
+                   tempR += pixels[tempPix] * edgeKernel[y + 1][x + 1];
+                   tempG += pixels[tempPix + 1] * edgeKernel[y + 1][x + 1];
+                   tempB += pixels[tempPix + 2] * edgeKernel[y + 1][x + 1];
                 }
             }
             newPixels[pix] = tempR;
@@ -114,9 +112,7 @@ $(document).ready(function() {
             newPixels[pix + 2] = tempB;
             newPixels[pix + 3] = 255; //for the alpha chanel 
         }
-        console.log("I finished");
         context.putImageData(newImage, 0, 0);
-
     }
     
 	
