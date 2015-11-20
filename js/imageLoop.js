@@ -8,9 +8,6 @@ $(document).ready(function() {
         });
         //check for user image upload
         $("#file-input").on("change", addUserImage);
-            //console.log(this.files);
-            //addUserImage(this.files);
-
         
         $("#invert").on("click", function() {
             invertColors();
@@ -32,6 +29,7 @@ $(document).ready(function() {
         var canvas = document.getElementById("myCanvas");
         //Get the 2D context
         var context = canvas.getContext("2d");
+        //created a file reader
         var reader = new FileReader();
         reader.onload = function(e){
             var image = new Image();
@@ -63,11 +61,6 @@ $(document).ready(function() {
         //Add the image
         var image = new Image();
         image.src="rainier.jpg"
-
-
-
-
-
         //Load the image into the canvas
         $(image).load(function() {
         	var ratio = 1;
@@ -78,9 +71,6 @@ $(document).ready(function() {
         		ratio = 500 / Math.max(height, width);
         	}
         	context.drawImage(image, 0, 0, (width * ratio), (height * ratio));
-
-        	//Add a filter (practice)
-
         	
         });
 
