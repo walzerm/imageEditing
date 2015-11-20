@@ -41,6 +41,8 @@ $(document).ready(function() {
                 if (height > 500 || width > 500) {
                     ratio = 500 / Math.max(height, width);
                 }
+                canvas.width = width * ratio;
+                canvas.height = height * ratio;
                 context.drawImage(image,0,0,(width * ratio), (height * ratio));
             }
             image.src = e.target.result;
@@ -61,6 +63,7 @@ $(document).ready(function() {
         //Add the image
         var image = new Image();
         image.src="rainier.jpg"
+
         //Load the image into the canvas
         $(image).load(function() {
         	var ratio = 1;
@@ -70,6 +73,8 @@ $(document).ready(function() {
         	if (height > 500 || width > 500) {
         		ratio = 500 / Math.max(height, width);
         	}
+            canvas.width = width * ratio;
+            canvas.height = height * ratio;
         	context.drawImage(image, 0, 0, (width * ratio), (height * ratio));
         	
         });
