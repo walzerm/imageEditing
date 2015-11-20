@@ -89,49 +89,28 @@ $(document).ready(function() {
         var newPixels = newImage.data;
         console.log("I started");
         //describes a sorbel edge dection filter
-        var outlineKernel = [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]];
+        var kernel = [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]];
         //set a variable "row" to define the row of pixels in the canvas
         var row = canvas.width * 4;
         //loops through the rows in the canvas
-        for (var i = 0; i < pixels.length; i += 4) {
-            //parses the pixels in each row
-            for (var j = 0; j < row; j++) {
-                var adjustedRed = 0;
-                //console.log(adjustedRed);
-                var adjustedGreen = 0;
-                var adjustedBlue = 0;
-                //console.log("The original i and j coordinates are " + i + " " + j);
-                //loops through each row in the kernel matrix
-                for (var k = 0; k < outlineKernel.length; k++) {
-                    for (var l = 0; l < outlineKernel[k].length; l++) {
-                        //console.log("The k and l coordinates are " + k + " " + l);
-                        
-                        var newI = i + (k - Math.floor(outlineKernel.length / 2));
-                        var newJ = j + (l - Math.floor((outlineKernel[k].length / 2)));
-                        var flatPixelsIndex = newJ * 2000 + newI;
-                        //console.log(flatPixelsIndex);
-                        var kernalValue = outlineKernel[k][l];
-                        if (pixels[flatPixelsIndex] === undefined){
-                            //adjustedRed += 0;
-                        } else {
-                            adjustedRed += pixels[flatPixelsIndex] * kernalValue;
-                            adjustedGreen += pixels[flatPixelsIndex + 1] * kernalValue;
-                            adjustedBlue += pixels[flatPixelsIndex + 2] * kernalValue;
-                        }
-                        //adjustedGreen += pixels[flatPixelsIndex + 1] * kernalValue;
-                        //adjustedBlue += pixels[flatPixelsIndex + 2] * kernalValue;
-                        //debugger;
+        
+        for (var pix = 0; pix <= pixels.length; pix+=4) {
+            var tempR = tempG = tempB = 0;
+            for (var y = -1; y <= 1; y++) {
+                for (var x = -1; x <= 1; x++) {
+                    var tempPix = pix + (row * y) + (x * 4);
+                    if (pixels[tempPix] === undefined) {
+                        continue;
                     }
+                   tempR += pixels[tempPix] * kernel[y + 1][x + 1];
+                   tempG += pixels[tempPix + 1] * kernel[y + 1][x + 1];
+                   tempB += pixels[tempPix + 2] * kernel[y + 1][x + 1];
                 }
-               // console.log("=======");
-
-                //console.log(adjustedRed);
-                var flatPixelsIndex = j * 2000 + i;
-                newPixels[flatPixelsIndex] = adjustedRed;
-                newPixels[flatPixelsIndex + 1] = adjustedGreen;
-                newPixels[flatPixelsIndex + 2] = adjustedBlue;
-                newPixels[flatPixelsIndex + 3] = 255;                
             }
+            newPixels[pix] = tempR;
+            newPixels[pix + 1] = tempG;
+            newPixels[pix + 2] = tempB;
+            newPixels[pix + 3] = 255; //for the alpha chanel 
         }
         console.log("I finished");
         context.putImageData(newImage, 0, 0);
