@@ -87,7 +87,7 @@ $(document).ready(function() {
 
         var newImage = context.createImageData(canvas.width, canvas.height);
         var newPixels = newImage.data;
-        console.log(pixels);
+        console.log("I started");
         //describes a sorbel edge dection filter
         var outlineKernel = [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]];
         //set a variable "row" to define the row of pixels in the canvas
@@ -109,7 +109,7 @@ $(document).ready(function() {
                         var newI = i + (k - Math.floor(outlineKernel.length / 2));
                         var newJ = j + (l - Math.floor((outlineKernel[k].length / 2)));
                         var flatPixelsIndex = newJ * 2000 + newI;
-                        console.log(flatPixelsIndex);
+                        //console.log(flatPixelsIndex);
                         var kernalValue = outlineKernel[k][l];
                         if (pixels[flatPixelsIndex] === undefined){
                             //adjustedRed += 0;
@@ -133,10 +133,11 @@ $(document).ready(function() {
                 newPixels[flatPixelsIndex + 3] = 255;                
             }
         }
-        console.log(newPixels);
+        console.log("I finished");
         context.putImageData(newImage, 0, 0);
 
     }
+    
 	
 	createCanvas();
 
