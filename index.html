@@ -1,23 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Setting up the image loop</title>
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="js/imageLoop.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 
 </head>
 <body>
-    <canvas id="myCanvas">
-    </canvas>
-    <button id="load-pic">Load the picture</button>
-    <button id="invert">Invert Colors</button>
-    <button id="greyscale">Greyscale</button>
-    <button id="negative">Negative Colors</button>
-    <button id="kernel">Kernel</button>
-    <button id="reset">Reset the current image</button>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-8 center">
+				<button id="load-pic">Load the picture</button>
+			    <button id="invert">Invert Colors</button>
+			    <button id="greyscale">Greyscale</button>
+			    <button id="negative">Negative Colors</button>
+			    <button id="kernel">Kernel</button>
+			    <button id="reset">Reset the current image</button>
+			    <input id="file-input" type="file">
+	    	</div>
+	    	<div class="col-md-1"></div>
+	    </div>
+	    <div class="row center">
+				<canvas id="myCanvas">
+			    </canvas>
+	    </div>
+    </div>
 
-
-    <input id="file-input" type="file">
+    
 
 </body>
 </html>
