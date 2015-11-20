@@ -84,34 +84,41 @@ $(document).ready(function() {
 
         var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         var pixels = imageData.data;
-
+        //create a new, empty image used to make the edited picture
         var newImage = context.createImageData(canvas.width, canvas.height);
         var newPixels = newImage.data;
-
+        //various kernels
         var blurKernel = [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]];
         var edgeKernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
         var sharpenKernel = [[0, -1, 0], [-1, 5, -1], [0, -1, 0]];
- 
+        //the width of the image, used to manipulate the one demensional array
         var row = canvas.width * 4;
-        
+        //looping though the source array of pixels
         for (var pix = 0; pix <= pixels.length; pix+=4) {
+            //temporary RGB variables to hold the edited pixel data
             var tempR = tempG = tempB = 0;
+            //nested loops to naviage the two dimensional kernel array
             for (var y = -1; y <= 1; y++) {
                 for (var x = -1; x <= 1; x++) {
+                    //variable for finding the pixel to be manipulated in relation to the kernel position
                     var tempPix = pix + (row * y) + (x * 4);
+                    //if statement to handle edge cases
                     if (pixels[tempPix] === undefined) {
                         continue;
                     }
-                   tempR += pixels[tempPix] * edgeKernel[y + 1][x + 1];
-                   tempG += pixels[tempPix + 1] * edgeKernel[y + 1][x + 1];
-                   tempB += pixels[tempPix + 2] * edgeKernel[y + 1][x + 1];
+                    //adding the accumulated RGB values for the target pixel
+                    tempR += pixels[tempPix] * edgeKernel[y + 1][x + 1];
+                    tempG += pixels[tempPix + 1] * edgeKernel[y + 1][x + 1];
+                    tempB += pixels[tempPix + 2] * edgeKernel[y + 1][x + 1];
                 }
             }
+            //creating the new image with the edited pixel data
             newPixels[pix] = tempR;
             newPixels[pix + 1] = tempG;
             newPixels[pix + 2] = tempB;
             newPixels[pix + 3] = 255; //for the alpha chanel 
         }
+        //placing the new image onto the canvas, over the old image
         context.putImageData(newImage, 0, 0);
     }
     
