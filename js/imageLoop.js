@@ -1,14 +1,15 @@
 //Run this on python -m SimpleHTTPServer to avoid security issues with the image
-
+var CURRENT_IMAGE = "rainier.jpg";
 $(document).ready(function() {  
 
     function whenClicked() {
+
         $("#load-pic").on("click", function() {
-            createCanvas();
+            createCanvas(CURRENT_IMAGE );
         });
         //check for user image upload
         $("#file-input").on("change", addUserImage);
-        
+
         $("#invert").on("click", function() {
             invertColors();
         });
@@ -22,6 +23,10 @@ $(document).ready(function() {
         $("#kernel").on("click", function() {
             kernelFilter();
         });
+        $("#reset").on("click", function() {
+                createCanvas(CURRENT_IMAGE );     
+        });
+
     }
 
     function addUserImage(e) {
@@ -30,6 +35,7 @@ $(document).ready(function() {
         //Get the 2D context
         var context = canvas.getContext("2d");
         //created a file reader
+        
         var reader = new FileReader();
         reader.onload = function(e){
             var image = new Image();
@@ -46,15 +52,19 @@ $(document).ready(function() {
                 context.drawImage(image,0,0,(width * ratio), (height * ratio));
             }
             image.src = e.target.result;
+            CURRENT_IMAGE  = image.src;
+            
         }
-    reader.readAsDataURL(e.target.files[0]);     
+    reader.readAsDataURL(e.target.files[0]);
+    
+
     }
 
 
         
     
 
-	function createCanvas() {
+	function createCanvas(CURRENT_IMAGE ) {
 		//Select the canvas
         var canvas = document.getElementById("myCanvas");
         //Get the 2D context
@@ -62,7 +72,7 @@ $(document).ready(function() {
 
         //Add the image
         var image = new Image();
-        image.src="rainier.jpg"
+        image.src = CURRENT_IMAGE ;
 
         //Load the image into the canvas
         $(image).load(function() {
