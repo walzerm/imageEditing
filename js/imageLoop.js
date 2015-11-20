@@ -1,14 +1,72 @@
 //Run this on python -m SimpleHTTPServer to avoid security issues with the image
 
-$(document).ready(function() {   
+$(document).ready(function() {  
+
+    function whenClicked() {
+        $("#load-pic").on("click", function() {
+            createCanvas();
+        });
+        //check for user image upload
+        $("#file-input").on("change", addUserImage);
+            //console.log(this.files);
+            //addUserImage(this.files);
+
+        
+        $("#invert").on("click", function() {
+            invertColors();
+        });
+        $("#greyscale").on("click", function() {
+            greyscale();
+        });
+        $("#negative").on("click", function() {
+            invertColors();
+            greyscale();
+        });
+        $("#kernel").on("click", function() {
+            kernelFilter();
+        });
+    }
+
+    function addUserImage(e) {
+        //Select the canvas
+        var canvas = document.getElementById("myCanvas");
+        //Get the 2D context
+        var context = canvas.getContext("2d");
+        var reader = new FileReader();
+        reader.onload = function(e){
+            var image = new Image();
+            image.onload = function(){
+                var ratio = 1;
+                var height = image.naturalHeight;
+                var width = image.naturalWidth;
+                //Adjust the ratio of the image to fit the canvas
+                if (height > 500 || width > 500) {
+                    ratio = 500 / Math.max(height, width);
+                }
+                context.drawImage(image,0,0,(width * ratio), (height * ratio));
+            }
+            image.src = e.target.result;
+        }
+    reader.readAsDataURL(e.target.files[0]);     
+    }
+
+
+        
+    
+
 	function createCanvas() {
 		//Select the canvas
         var canvas = document.getElementById("myCanvas");
         //Get the 2D context
         var context = canvas.getContext("2d");
+
         //Add the image
         var image = new Image();
-    	image.src="rainier.jpg"
+        image.src="rainier.jpg"
+
+
+
+
 
         //Load the image into the canvas
         $(image).load(function() {
@@ -22,19 +80,7 @@ $(document).ready(function() {
         	context.drawImage(image, 0, 0, (width * ratio), (height * ratio));
 
         	//Add a filter (practice)
-        	$("#invert").on("click", function() {
-        		invertColors();
-        	});
-            $("#greyscale").on("click", function() {
-                greyscale();
-            });
-            $("#negative").on("click", function() {
-                invertColors();
-                greyscale();
-            });
-            $("#kernel").on("click", function() {
-                kernelFilter();
-            })
+
         	
         });
 
@@ -123,6 +169,6 @@ $(document).ready(function() {
     }
     
 	
-	createCanvas();
+	whenClicked();
 
 });
