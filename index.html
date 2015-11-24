@@ -1,32 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Setting up the image loop</title>
+	<title>Image Page</title>
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="js/imageLoop.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 
 </head>
 <body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div>
+				<a class="navbar-brand" href="intro.html">PhotoEditor</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="about.html">About</a></li>
+    			</ul>
+			</div>
+		</div>
+	</nav>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-8 center">
-				<button id="load-pic">Load the picture</button>
-			    <button id="invert">Invert Colors</button>
-			    <button id="greyscale">Greyscale</button>
-			    <button id="negative">Negative Colors</button>
-			    <button id="kernel">Kernel</button>
-			    <button id="reset">Reset the current image</button>
-			    <input id="file-input" type="file">
-	    	</div>
-	    	<div class="col-md-1"></div>
-	    </div>
-	    <div class="row center">
-				<canvas id="myCanvas">
-			    </canvas>
-	    </div>
+		<div class="col-md-8 center">
+			<canvas id="myCanvas">
+		    </canvas>
+		</div>
+		<div class="col-md-4 pull-left">
+			<button class="btn btn-primary" id="load-pic">Load a preset picture</button>
+			<br>
+			<br>
+			<div class="btn-group">
+  				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    				Colors <span class="caret"></span>
+  				</button>
+  				<ul class="dropdown-menu">
+				    <li><a href="#" id="greyscale">Greyscale</a></li>
+				    <li><a href="#" id="invert">Invert Colors</a></li>
+				    <li><a href="#" id="negative">Negative</a></li>
+				  </ul>
+				</div>
+			<br>
+			<br>
+			<div class="btn-group">
+  				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    				Advanced Options <span class="caret"></span>
+  				</button>
+  				<ul class="dropdown-menu">
+				    <li><a href="#" id="edge">Edge Detection</a></li>
+				    <li><a href="#" id="sharpen">Sharpen</a></li>
+				    <li><a href="#" id="blur">Blur</a></li>
+				  </ul>
+				</div>
+			<br>
+			<br>
+		    <button class="btn btn-primary" id="reset">Reset the current image</button>
+		    <br>
+		    <br>
+		    <div class="input-group">
+		    	<input id="file-input" type="file">
+		    </div>
+    	</div>
+			
     </div>
 
     

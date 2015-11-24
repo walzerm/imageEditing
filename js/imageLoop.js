@@ -20,8 +20,14 @@ $(document).ready(function() {
             invertColors();
             greyscale();
         });
-        $("#kernel").on("click", function() {
-            kernelFilter();
+        $("#edge").on("click", function() {
+            kernelFilter([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]]);
+        });
+        $("#sharpen").on("click", function() {
+            kernelFilter([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]);
+        });
+        $("#blur").on("click", function() {
+            kernelFilter([[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]]);
         });
         $("#reset").on("click", function() {
                 createCanvas(CURRENT_IMAGE );     
@@ -129,7 +135,7 @@ $(document).ready(function() {
         //Redraw the image at the same coordinates
         context.putImageData(imageData,0,0);
     }
-    function kernelFilter() {
+    function kernelFilter(matrix) {
         var canvas = document.getElementById("myCanvas");
         var context = canvas.getContext("2d");
 
@@ -138,10 +144,6 @@ $(document).ready(function() {
         //create a new, empty image used to make the edited picture
         var newImage = context.createImageData(canvas.width, canvas.height);
         var newPixels = newImage.data;
-        //various kernel matrices 
-        var blurKernel = [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]];
-        var edgeKernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
-        var sharpenKernel = [[0, -1, 0], [-1, 5, -1], [0, -1, 0]];
         //the width of the image, used to manipulate the one demensional array
         var row = canvas.width * 4;
         //looping though the source array of pixels
@@ -158,9 +160,9 @@ $(document).ready(function() {
                         continue;
                     }
                     //adding the accumulated RGB values for the target pixel
-                    tempR += pixels[tempPix] * edgeKernel[y + 1][x + 1];
-                    tempG += pixels[tempPix + 1] * edgeKernel[y + 1][x + 1];
-                    tempB += pixels[tempPix + 2] * edgeKernel[y + 1][x + 1];
+                    tempR += pixels[tempPix] * matrix[y + 1][x + 1];
+                    tempG += pixels[tempPix + 1] * matrix[y + 1][x + 1];
+                    tempB += pixels[tempPix + 2] * matrix[y + 1][x + 1];
                 }
             }
             //creating the new image with the edited pixel data
