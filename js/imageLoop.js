@@ -1,53 +1,53 @@
 //Run this on python -m SimpleHTTPServer to avoid security issues with the image
 var CURRENT_IMAGE;
 $(document).ready(function() {  
-    readQueryParams(); 
+
+    $("#introModal").modal("show");
     
-    loadImage();
-        //check for user image upload
-        $("#file-input").on("change", addUserImage);
+    $("#file-input").on("change", addUserImage);
 
-        
-
-        $("#invert").on("click", function() {
-            invertColors();
-        });
-        $("#greyscale").on("click", function() {
-            greyscale();
-        });
-        $("#negative").on("click", function() {
-            invertColors();
-            greyscale();
-        });
-        $("#edge").on("click", function() {
-            kernelFilter([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]]);
-        });
-        $("#sharpen").on("click", function() {
-            kernelFilter([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]);
-        });
-        $("#blur").on("click", function() {
-            kernelFilter([[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]]);
-        });
-        $("#reset").on("click", function() {
-                loadImage();     
-        });
+    $("#mountain").on("click", function() {
+       CURRENT_IMAGE = "rainier.jpg";
+       loadImage();
+       $("#introModal").modal("hide");
+    })
+    $("#dog").on("click", function() {
+       CURRENT_IMAGE = "shiba.jpg";
+       loadImage();
+       $("#introModal").modal("hide");
+    })
+    $("#library").on("click", function() {
+       CURRENT_IMAGE = "suzzallo.jpg";
+       loadImage();
+       $("#introModal").modal("hide");
+    })
+    $("#invert").on("click", function() {
+        invertColors();
+    });
+    $("#greyscale").on("click", function() {
+        greyscale();
+    });
+    $("#negative").on("click", function() {
+        invertColors();
+        greyscale();
+    });
+    $("#edge").on("click", function() {
+        kernelFilter([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]]);
+    });
+    $("#sharpen").on("click", function() {
+        kernelFilter([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]);
+    });
+    $("#blur").on("click", function() {
+        kernelFilter([[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]]);
+    });
+    $("#reset").on("click", function() {
+            loadImage();     
+    });
+    $("#startOver").on("click", function() {
+        $("#introModal").modal("show");
+    })
 
 });
-
-function readQueryParams() {
-    var queryString = document.location.search.replace('?', '');
-    var pairs = queryString.split('&').map(function (pair) {
-      return pair.split('=');
-    });
-    if (pairs[0][1] === "none") {
-        var dataImage = localStorage.getItem('imgData');
-        debugger;
-        CURRENT_IMAGE = "data:image/png;base64," + dataImage;
-        console.log(CURRENT_IMAGE);
-    } else {
-        CURRENT_IMAGE = pairs[0][1];
-    };
-}
 
 function getPixelData() {
     var canvas = document.getElementById("myCanvas");
@@ -86,10 +86,8 @@ function addUserImage(e) {
         
     }
     reader.readAsDataURL(e.target.files[0]);
-
-
+    $("#introModal").modal("hide");
 }
-
 
 function loadImage() {
     //Select the canvas
@@ -118,9 +116,6 @@ function loadImage() {
 
 };
     
-
-
-
 function invertColors() {
 	var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
