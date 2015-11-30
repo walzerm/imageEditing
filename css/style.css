@@ -1,0 +1,11 @@
+.center {
+	text-align: center;
+}
+
+.btn {
+	width: 200px;
+}
+
+.border {
+	border-right: 1px solid #ccc;
+}
