@@ -7,17 +7,17 @@ $(document).ready(function() {
     $("#file-input").on("change", addUserImage);
 
     $("#mountain").on("click", function() {
-       CURRENT_IMAGE = "rainier.jpg";
+       CURRENT_IMAGE = "/img/rainier.jpg";
        loadImage();
        $("#introModal").modal("hide");
     })
     $("#dog").on("click", function() {
-       CURRENT_IMAGE = "shiba.jpg";
+       CURRENT_IMAGE = "/img/shiba.jpg";
        loadImage();
        $("#introModal").modal("hide");
     })
     $("#library").on("click", function() {
-       CURRENT_IMAGE = "suzzallo.jpg";
+       CURRENT_IMAGE = "/img/suzzallo.jpg";
        loadImage();
        $("#introModal").modal("hide");
     })
