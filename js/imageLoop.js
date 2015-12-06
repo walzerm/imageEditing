@@ -1,13 +1,28 @@
 //Run this on python -m SimpleHTTPServer to avoid security issues with the image
 var CURRENT_IMAGE;
-$(document).ready(function() {  
-    readQueryParams(); 
-    
+$(document).ready(function() {
+    readQueryParams();
+
     loadImage();
-        //check for user image upload
+
+        //$("#introModal").modal("show");
         $("#file-input").on("change", addUserImage);
 
-        
+        $("#mountain").on("click", function() {
+            CURRENT_IMAGE = "img/rainier.jpg";
+            loadImage();
+            $("#introModal").modal("hide");
+        })
+        $("#dog").on("click", function() {
+            CURRENT_IMAGE = "img/shiba.jpg";
+            loadImage();
+            $("#introModal").modal("hide");
+        })
+        $("#library").on("click", function() {
+            CURRENT_IMAGE = "img/suzzallo.jpg";
+            loadImage();
+            $("#introModal").modal("hide");
+       })
 
         $("#invert").on("click", function() {
             invertColors();
@@ -29,9 +44,11 @@ $(document).ready(function() {
             kernelFilter([[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]]);
         });
         $("#reset").on("click", function() {
-                loadImage();     
+                loadImage();
         });
-
+        $("#startOver").on("click", function() {
+            $("#introModal").modal("show");
+        })
 });
 
 function readQueryParams() {
@@ -65,7 +82,7 @@ function addUserImage(e) {
     //Get the 2D context
     var context = canvas.getContext("2d");
     //created a file reader
-    
+
     var reader = new FileReader();
     reader.onload = function(e){
         var image = new Image();
@@ -83,9 +100,10 @@ function addUserImage(e) {
         }
         image.src = e.target.result;
         CURRENT_IMAGE  = image.src;
-        
+
     }
     reader.readAsDataURL(e.target.files[0]);
+    $("#introModal").modal("hide");
 
 
 }
@@ -113,11 +131,11 @@ function loadImage() {
         canvas.width = width * ratio;
         canvas.height = height * ratio;
         context.drawImage(image, 0, 0, (width * ratio), (height * ratio));
-        
+
     });
 
 };
-    
+
 
 
 
@@ -193,14 +211,8 @@ function kernelFilter(matrix) {
         newPixels[pix] = tempR;
         newPixels[pix + 1] = tempG;
         newPixels[pix + 2] = tempB;
-        newPixels[pix + 3] = 255; //for the alpha chanel 
+        newPixels[pix + 3] = 255; //for the alpha chanel
     }
     //placing the new image onto the canvas, over the old image
     context.putImageData(newImage, 0, 0);
 }
-
-
-
-
-
-

@@ -22,6 +22,49 @@
 			</div>
 		</div>
 	</nav>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="introModal">
+  		<div class="modal-dialog">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">Load An image</h4>
+		    	</div>
+		    	<div class="modal-body">
+		    		<br>
+	 				<div class="row">
+	   					<div class="col-md-6 border">
+	   						<h4>Select a pre-loaded image</h4>
+	   						<br>
+	   						<div class="btn-group">
+				  				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="preloadOp">
+				    				Select a preloaded image <span class="caret"></span>
+				  				</button>
+				  				<ul class="dropdown-menu">
+								    <li><a href="#" id="mountain">Mountain</a></li>
+								    <li><a href="#" id="dog">Dog</a></li>
+								    <li><a href="#" id="library">Library</a></li>
+								</ul>
+							</div>
+	   					</div>
+	   					<div class="col-md-6 center">
+	   						<h4>Upload your own image</h4>
+	   						<br>
+	   						<div class="form-group">
+							    <div class="input-group">
+							    	<input id="file-input" type="file">
+							    </div>
+						    </div>
+						    <br>
+						    <br>
+	   					</div>
+					</div>
+					<div class="col-md-1"></div>
+		     	</div>
+		    </div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<div class="container-fluid">
 		<div class="col-md-8 center">
 			<canvas id="myCanvas">
@@ -58,12 +101,14 @@
 		    <button class="btn btn-primary" id="reset">Reset the current image</button>
 		    <br>
 		    <br>
+            <button class="btn btn-primary" id="startOver">Start Over</button>
+	
 
     	</div>
-			
+
     </div>
 
-    
+
 
 </body>
 </html>
