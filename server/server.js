@@ -14,7 +14,7 @@ app.get('/', function(req, res) {
         res.end();
     })
 })
-
+app.use(express.static('../public'));
 app.get('/js/imageLoop.js', function(req, res) {
     fs.readFile('../js/imageLoop.js', function(err, data) {
         if (err) {
@@ -25,7 +25,9 @@ app.get('/js/imageLoop.js', function(req, res) {
     })
 })
 
-app.get('/css/style.css', function(req, res) {
+
+
+/*app.get('/css/style.css', function(req, res) {
     res.set('Content-Type', 'text/css');
     fs.readFile('../css/style.css', function(err, data) {
         if (err) {
@@ -64,7 +66,7 @@ app.get('/img/suzzallo.jpg', function(req, res) {
         res.write(data);
         res.end();
     })
-})
+})*/
 
 app.listen(8000, function() {
     console.log("Listening on port 8000...");
